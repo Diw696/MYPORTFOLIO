@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* Surfaces */
+  --color-ink: #0b0b0c;
+  --color-ink-2: #111113;
+  --color-ink-3: #19191c;
+  --color-line: #222226;
+  --color-line-strong: #34343b;
+
+  /* Text */
+  --color-fg: #ecebe6;
+  --color-fg-muted: #a6a59f;
+  --color-fg-faint: #858480;
+
+  /* The one accent */
+  --color-accent: #ff8a4c;
+  --color-accent-hover: #ffa06e;
+
+  /* Pipeline layer tints (used only inside the Pipeone motif) */
+  --color-bronze: #5a4434;
+  --color-silver: #4b4b52;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background-color: var(--color-ink);
+    color: var(--color-fg);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Faint engineering grid behind the hero, faded out at the edges */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 75% 65% at 65% 30%, #000 15%, transparent 72%);
+  }
+
+  /* Hatching used by empty image slots */
+  .hatch {
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgb(255 255 255 / 0.03) 0 1px,
+      transparent 1px 10px
+    );
+  }
+
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    border-radius: 0.375rem;
+    background: var(--color-accent);
+    color: var(--color-ink);
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus {
+    transform: none;
+  }
+
+  /* A packet travelling along a short connector. Delays sequence the hops. */
+  .packet {
+    animation: packet-hop 3.6s linear infinite;
+  }
+}
+
+@keyframes packet-hop {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  3% {
+    opacity: 1;
+  }
+  28% {
+    opacity: 1;
+  }
+  32% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
